@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateReportRequest extends FormRequest
+class UpdateTopicRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,10 +22,12 @@ class UpdateReportRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rule = [
-            'is_solved' => 'required|boolean',
+        return [
+            'topic' => [
+                'required',
+                'min:3', 'max:255',
+                Rule::unique('topics')->ignore($this->topic)
+            ],
         ];
-
-        return $rule;
     }
 }

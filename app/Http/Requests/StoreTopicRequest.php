@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateReportRequest extends FormRequest
+class StoreTopicRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,10 +21,8 @@ class UpdateReportRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rule = [
-            'is_solved' => 'required|boolean',
+        return [
+            'topic' => 'required|min:3|max:255|unique:topics'
         ];
-
-        return $rule;
     }
 }

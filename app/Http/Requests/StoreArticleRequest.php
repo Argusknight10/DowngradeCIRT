@@ -23,7 +23,7 @@ class StoreArticleRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:255|unique:articles',
-            'status' => 'required',
+            'is_published' => 'required|in:0,1',
             'body' => 'required|min:3',
             'image' => 'required|image'
         ];

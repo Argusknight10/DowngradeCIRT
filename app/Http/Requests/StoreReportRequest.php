@@ -25,7 +25,8 @@ class StoreReportRequest extends FormRequest
             'name' => 'required|min:3|max:255',
             'email' => 'nullable|email:dns',
             'phone_number' => 'nullable|numeric|digits_between:11,18',
-            'topic' => 'required|min:3|max:255',
+            'topics' => 'required|array|min:1',
+            'topics.*' => 'exists:topics,id', 
             'description' => 'required|min:3|max:255',
             'image' => 'nullable|image'
         ];
