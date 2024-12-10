@@ -4,6 +4,7 @@ export default {
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
     "./resources/**/*.vue",
+    './resources/css/**/*.css',
     "./node_modules/flowbite/**/*.js"
   ],
   theme: {
@@ -13,6 +14,7 @@ export default {
     require('flowbite/plugin')({
         charts: true,
     }),
-  ],
+    // require('@tailwindcss/line-clamp'),
+  ],  
 }
 
