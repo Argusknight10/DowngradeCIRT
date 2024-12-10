@@ -12,14 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('report_topic', function (Blueprint $table) {
-            $table->uuid('report_id'); 
+            $table->uuid('report_id'); // UUID (CHAR(36))
             $table->unsignedBigInteger('topic_id'); 
-            
+
+            $table->primary(['report_id', 'topic_id']);
 
             $table->foreign('report_id')->references('id')->on('reports')->onDelete('restrict');
-            $table->foreign('topic_id')->references('id')->on('topics')->onDelete('restrict');
-        
-            $table->primary(['report_id', 'topic_id']);
+            $table->foreign('topic_id')->references('id')->on('topics')->onDelete('restrict');        
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
         });        
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExist('report-topic');
+        Schema::dropIfExist('report_topic');
     }
 };

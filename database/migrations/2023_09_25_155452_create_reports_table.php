@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reports', function (Blueprint $table) {
-            $table->uuid('id')->primary('id');
+            $table->uuid('id')->primary();
             $table->string('name');
             $table->string('email');
             $table->string('phone_number')->nullable();
@@ -23,6 +23,8 @@ return new class extends Migration
             $table->foreignId('solved_by')->nullable();
             $table->timestamp('created_at');
             $table->softDeletes();
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
         });
     }
 
