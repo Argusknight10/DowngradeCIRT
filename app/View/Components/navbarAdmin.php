@@ -24,3 +24,4 @@ class navbarAdmin extends Component
         return view('components.navbar-admin');
     }
 }
+
