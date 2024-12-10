@@ -1,10 +1,6 @@
-@extends('admin.main')
+<x-mainAdmin>
+  <x-slot:title>Trash Reports</x-slot:title>
 
-@section('title')
-  Articles
-@endsection
-
-@section('content')
   <div class="p-6 sm:ml-64 my-20">
     <h1 class="text-4xl text-[#14477A] mb-4">Sampah Aduan</h1>
     {{-- toas --}}
@@ -141,7 +137,7 @@
     </div>
 
   </div>
-@endsection
+</x-mainAdmin>
 
 @section('js')
 @endsection
