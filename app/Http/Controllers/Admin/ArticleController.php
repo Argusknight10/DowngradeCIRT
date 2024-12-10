@@ -44,28 +44,27 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
+        // dd($request->all());
         $validatedData = $request->validated();
 
-        if ($validatedData['status'] == 1) {
+        if ($validatedData['is_published'] == 1) {
             $validatedData['is_published'] = true;
             $validatedData['published_by'] = auth()->id();
             $validatedData['published_at'] = now();
         }
 
         if ($request->hasFile('image')) {
-            $validatedData['image'] = $request->file('image')->store('articles');
+            $validatedData['image'] = $request->file('image')->store('articles', 'public');
         }
 
         $dom = new DOMDocument();
-        $dom->loadHTML($validatedData['body']);
+        $dom->loadHTML('<div>'.$validatedData['body'].'</div>');
         $firstParagraph = $dom->getElementsByTagName('p')->item(0);
 
         $validatedData['excerpt'] = Str::excerpt($firstParagraph->textContent);
 
         $validatedData['slug'] = Str::slug($validatedData['title']);
         $validatedData['created_by'] = auth()->id();
-
-        dd($validatedData);
 
         Article::create($validatedData);
 
@@ -80,9 +79,11 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         $article->load('user');
-
+        $articles = Article::latest()->take(2)->get();
+        // dd($articles);
         return view('admin.sections.articles.show', [
-            'article' => $article
+            'article' => $article,
+            'articles' => $articles
         ]);
     }
 
@@ -106,16 +107,16 @@ class ArticleController extends Controller
         $payload = $request->all();
 
         if ($payload['title'] !== $article->title) {
-            $payload['title'] = Str::slug($payload['title']);
+            $payload['slug'] = Str::slug($payload['title']);
         }
 
-        if ($request->has('image')) {
+        if ($request->hasFile('image')) {
             // don't remove if image generate by seeder
             if ($article->image !== 'articles/article-test.png') {
                 Storage::delete($article->image);
             }
 
-            $payload['image'] = $request->file('image')->store('articles');
+            $payload['image'] = $request->file('image')->store('articles', 'public');
         }
 
         $article->update($payload);
