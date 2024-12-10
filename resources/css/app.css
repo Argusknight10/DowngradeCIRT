@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active {
+    @apply bg-[#14477A] rounded-s-md text-white p-2
+}
+.active2{
+    @apply bg-[#14477A] rounded-e-md text-white p-2
+}
