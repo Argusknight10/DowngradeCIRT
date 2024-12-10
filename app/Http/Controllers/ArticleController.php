@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreArticleRequest;
+use App\Http\Requests\UpdateArticleRequest;
 
 class ArticleController extends Controller
 {
@@ -31,9 +33,11 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         $article->load('user');
-
+        $articles = Article::latest()->take(2)->get();
+        // dd($articles);
         return view('user.sections.articles.show', [
-            'article' => $article
+            'article' => $article,
+            'articles' => $articles
         ]);
     }
 }

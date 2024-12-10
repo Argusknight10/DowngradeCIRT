@@ -10,10 +10,11 @@ class HomeController extends Controller
     {
         $articles = Article::latest()
             ->select('id', 'slug', 'title', 'image', 'excerpt', 'created_at')
-            ->limit(4)
+            ->limit(3)
             ->get();
 
         return view('user.sections.home', [
+            'title' => 'Home',
             'articles' => $articles
         ]);
     }
