@@ -1,17 +1,19 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
-use App\Http\Controllers\Admin\ReportController as AdminReportController;
-use App\Http\Controllers\Admin\TrashedArticleController;
-use App\Http\Controllers\Admin\TrashedReportController;
-use App\Http\Controllers\Admin\UserController as AdminUserController;
-use App\Http\Controllers\ArticleController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FaqController;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Admin\TrashedReportController;
+use App\Http\Controllers\Admin\TrashedArticleController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\TopicController as AdminTopicController;
+use App\Http\Controllers\Admin\ReportController as AdminReportController;
+use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,8 @@ Route::resource('articles', ArticleController::class)->only(['index', 'show'])->
 Route::get('reports', [ReportController::class, 'create'])->name('reports.create');
 Route::post('reports/store', [ReportController::class, 'store'])->name('reports.store');
 
+Route::get('/faq', [FaqController::class, 'index'])->name('faq');
+
 // Route Auth
 // Login
 Route::get('login', [AuthController::class, 'login'])->name('login')->middleware('guest');
@@ -54,9 +58,16 @@ Route::group([
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('articles', AdminArticleController::class)->scoped(['article' => 'slug']);
     Route::resource('reports', AdminReportController::class)->except([
-        'create', 'store'
+        'create',
+        'store'
+    ]);
+    Route::resource('topics', AdminTopicController::class)->except([
+        'create',
+        'edit',
+        'show'
     ]);
     Route::resource('users', AdminUserController::class);
+
 
     Route::get('trashed-articles', [TrashedArticleController::class, 'index'])->name('trashed.articles.index');
     Route::post('trashed-articles/{article:slug}', [TrashedArticleController::class, 'restore'])
