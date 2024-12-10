@@ -1,10 +1,6 @@
-@extends('admin.main')
+<x-mainAdmin>
+  <x-slot:title>Trash Articles</x-slot:title>
 
-@section('title')
-  Articles
-@endsection
-
-@section('content')
   <div class="p-6 sm:ml-64 my-20">
     <h1 class="text-4xl text-[#14477A] mb-4">Sampah Artikel</h1>
     {{-- toast --}}
@@ -137,7 +133,7 @@
       {{ $articles->links() }}
     </div>
   </div>
-@endsection
+</x-mainAdmin>
 
 @section('js')
 @endsection

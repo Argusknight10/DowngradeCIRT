@@ -1,13 +1,9 @@
-@extends('admin.main')
+<x-mainAdmin>
+    <x-slot:title>Create Articles</x-slot:title>
 
-@section('title')
-    Create Article
-@endsection
-
-@section('content')
     <div class="mx-auto px-5 mb-20 sm:px-10 md:px-20">
         <div class="flex gap-2 items-center mt-20 mb-10 mx-auto w-[80%]">
-            <a href="{{ route('admin.articles.index') }}" class="text-xl flex items-center gap-2 text-[#14477A] font-medium">
+            <a href="{{ route('admin.articles.index') }}" class="text-xl flex font-thin items-center gap-2 text-[#14477A] transition-all duration-300 ease-in-out hover:font-bold">
                 <svg class="w-5 h-5 text-yellow-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                     fill="none" viewBox="0 0 8 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -16,7 +12,7 @@
                 <p>Master Artikel</p>
             </a>
             <span class="mx-2 text-3xl text-yellow-400">/</span>
-            <p class="text-[#14477A] text-xl">Buat Artikel</p>
+            <p class="text-[#14477A] font-medium text-xl">Buat Artikel</p>
         </div>
         <form action="{{ route('admin.articles.store') }}" class="mx-auto w-[80%]" method="post"
             enctype="multipart/form-data">
@@ -53,8 +49,7 @@
                 </div>
                 <div>
                     <div class="mt-5">
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="image">Gambar
-                            Cover</label>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="image">Gambar Cover (Landscape)</label>
                         <input
                             class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                             id="image" name="image" type="file" multiple onchange="loadFile(event)">
@@ -71,27 +66,33 @@
                         Artikel</button>
                 </div>
             </div>
+
+
+
+
         </form>
     </div>
-@endsection
-@section('js')
-    <script src="{{ asset('asset/tinymce/tinymce.min.js') }}"></script>
+    @section('js')
+        <script src="{{ asset('asset/tinymce/tinymce.min.js') }}"></script>
 
-    <script>
-        tinymce.init({
-            selector: '#editor',
-            plugins: 'advlist autolink lists link image charmap preview anchor',
-            toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image',
-        });
-        var loadFile = function(event) {
-            var output = document.getElementById('output');
-            if (event.target.files.length > 0) {
-                output.src = URL.createObjectURL(event.target.files[0]);
-                output.style.display = 'block';
-            } else {
-                output.src = '';
-                output.style.display = 'none';
+        <script>
+            tinymce.init({
+                selector: '#editor',
+                plugins: 'advlist autolink lists link image charmap preview anchor',
+                toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image',
+            });
+            var loadFile = function(event) {
+                var output = document.getElementById('output');
+                if (event.target.files.length > 0) {
+                    output.src = URL.createObjectURL(event.target.files[0]);
+                    output.style.display = 'block';
+                } else {
+                    output.src = '';
+                    output.style.display = 'none';
+                }
             }
-        }
-    </script>
-@endsection
+        </script>
+    @endsection
+</x-mainAdmin>
+
+
