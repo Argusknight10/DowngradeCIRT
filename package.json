@@ -20,6 +20,6 @@
         "boxicons": "^2.1.4",
         "jquery": "^3.6.0",
         "select2": "4.0.13",
-        "sweetalert2": "^11.7.32"
+        "sweetalert2": "^11.6.13"
     }
 }
